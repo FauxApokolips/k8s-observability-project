@@ -1,93 +1,96 @@
-# devops-k8s-app (Docker Hub variant)
+# Kubernetes Monitoring with Prometheus & Grafana
 
-Containerized web app with GitHub Actions CI/CD to Kubernetes, configured for **Docker Hub**.
-
-## Prerequisites
-- Docker, kubectl, Git, GitHub account
-- Kubernetes cluster (Minikube/kind or cloud: GKE/AKS/EKS)
-- Docker Hub account (repo: `fauxapokolips/devops-k8s-app`)
-
-## GitHub Secrets
-- `DOCKERHUB_USERNAME` = **fauxapokolips**
-- `DOCKERHUB_TOKEN` = Docker Hub access token
-- `KUBECONFIG_DATA` = base64 of kubeconfig file
-
-## Quick Start (Minikube)
-```bash
-minikube start
-minikube addons enable ingress
-docker build -t docker.io/fauxapokolips/devops-k8s-app:latest ./app
-kubectl apply -f k8s/
-
-## Kubernetes Observability Project 🚀
-
-Deploy a **Node.js web <img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/3c1b0da1-4222-49e5-be7c-5858cdba1795" />
-application** on **Kubernetes** with full **observability** using **Prometheus** and **Grafana**.  
-This project demonstrates containerization, orchestration, monitoring, and visualization in a DevOps workflow.
+🚀 **End-to-end Kubernetes Monitoring Stack** deployed on **Minikube** using Prometheus, Grafana, and Node Exporter.  
+This project demonstrates deploying a Node.js app to Kubernetes, exposing metrics via `/metrics`, and visualizing cluster + app performance in Grafana.
 
 ---
 
 ## 📌 Features
-- Containerized Node.js app with `/` and `/metrics` endpoints
-- Deployment on **Kubernetes (Minikube)**
-- **Ingress** for external access with nip.io host
-- **Prometheus** scraping system and app-level metrics
-- **Grafana dashboards** for visualization
-- Load testing with BusyBox to generate traffic
-- Clean folder structure for easy reproducibility
+- ✅ Node.js web application deployed on Kubernetes (Minikube)
+- ✅ Metrics exposed at `/metrics` endpoint
+- ✅ Prometheus setup to scrape application + cluster metrics
+- ✅ Alertmanager integration with Prometheus rules
+- ✅ Grafana dashboards for real-time visualization
+- ✅ Local development using Minikube & Docker Desktop
 
 ---
 
-## 🛠 Tech Stack
-- **Node.js / Express** – application & metrics endpoint  
-- **Docker** – containerization  
-- **Kubernetes (Minikube)** – orchestration  
-- **NGINX Ingress Controller** – routing  
-- **Prometheus** – monitoring & metrics scraping  
-- **Grafana** – dashboards & visualization  
+## 🏗️ Architecture
+```mermaid
+graph TD
+    A[Node.js App] -->|Expose /metrics| B[Prometheus]
+    B -->|Alerts| C[Alertmanager]
+    B -->|Data Source| D[Grafana]
+    E[Minikube Cluster] --> A
+    E --> B
+    E --> C
+    E --> D
+```
 
 ---
 
-## 📂 Project Structure
-k8s-observability-project/
-├── app/ # Node.js application & Dockerfile
-├── k8s/ # Kubernetes manifests (Deployment, Service, Ingress)
-├── monitoring/ # ServiceMonitor & monitoring configs
-├── screenshots/ # Grafana dashboards, Prometheus targets, etc.
-└── README.md # Project documentation
-
-
+## ⚙️ Tech Stack
+- **Kubernetes (Minikube)**
+- **Docker Desktop**
+- **Prometheus** (metrics scraping)
+- **Grafana** (visualization)
+- **Alertmanager** (alert handling)
+- **Node.js** (sample web app with metrics)
 
 ---
 
 ## 🚀 Setup & Deployment
 
-### 1. Start Minikube
+### 1️⃣ Start Minikube
 ```bash
-minikube start --cpus=4 --memory=6144
-minikube addons enable ingress
+minikube start --driver=docker
+```
 
-# Point Docker to Minikube daemon
-minikube -p minikube docker-env --shell powershell | Invoke-Expression
+### 2️⃣ Deploy the Node.js App
+```bash
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+```
 
-# Build the app image
-docker build -t docker.io/<your-username>/devops-k8s-app:v1 ./app
-
-# Apply Kubernetes manifests
-kubectl apply -f k8s/
-
+### 3️⃣ Deploy Prometheus & Grafana (via kube-prometheus-stack)
+```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
+helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring --create-namespace
+```
 
-helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack \
-  --namespace monitoring --create-namespace
+### 4️⃣ Access Services
+- **Node.js app** → `127.0.0.1:<port>`  
+- **Prometheus** → [http://127.0.0.1:9090](http://127.0.0.1:9090)  
+- **Grafana** → [http://127.0.0.1:3000](http://127.0.0.1:3000) (default user: `admin`)  
 
-kubectl apply -f monitoring/web-servicemonitor.yaml
+---
 
-# Grafana
-kubectl -n monitoring port-forward svc/kube-prometheus-stack-grafana 3030:80
-# open http://127.0.0.1:3030 (user: admin / pass: from secret)
+## 📊 Screenshots
 
-# Prometheus
-kubectl -n monitoring port-forward svc/kube-prometheus-stack-prometheus 9090:9090
-# open http://127.0.0.1:9090
+### 1. Node.js App Metrics
+![Node.js Metrics](screenshots/Screenshot_1.png)
+
+### 2. Prometheus Targets
+![Prometheus Targets](screenshots/Screenshot_2.png)
+
+### 3. Prometheus Rules & Alerts
+![Prometheus Alerts](screenshots/Screenshot_3.png)
+
+### 4. Grafana Dashboard (Cluster Monitoring)
+![Grafana Cluster Dashboard](screenshots/Screenshot_4.png)
+
+### 5. Grafana Dashboard (Node.js Metrics)
+![Grafana App Dashboard](screenshots/Screenshot_5.png)
+
+---
+
+## 🔮 Future Enhancements
+- Add **custom Grafana dashboards** for detailed app performance  
+- Integrate **Slack/Email alerts** via Alertmanager  
+- Deploy on **cloud Kubernetes (EKS/GKE/AKS)**  
+- CI/CD integration for automated deployments  
+
+---
+
+## 📜 License
+MIT License © 2025 [Your Name]
