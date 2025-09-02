@@ -69,18 +69,23 @@ helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring
 
 ### 1. Node.js App Metrics
 ![Node.js Metrics](screenshots/Screenshot_1.png)
+<img width="1919" height="1199" alt="Screenshot 2025-09-03 011623" src="https://github.com/user-attachments/assets/bcb4b800-db28-4044-9a53-268ba14e9bba" />
 
 ### 2. Prometheus Targets
 ![Prometheus Targets](screenshots/Screenshot_2.png)
+<img width="1919" height="1075" alt="Screenshot 2025-09-03 002813" src="https://github.com/user-attachments/assets/eece39c8-2745-4b18-b9e6-4b12e39bb8ae" />
 
 ### 3. Prometheus Rules & Alerts
 ![Prometheus Alerts](screenshots/Screenshot_3.png)
+<img width="1919" height="1054" alt="Screenshot 2025-09-03 011015" src="https://github.com/user-attachments/assets/847ee1e7-8417-4484-adca-6546a956cb42" />
 
 ### 4. Grafana Dashboard (Cluster Monitoring)
 ![Grafana Cluster Dashboard](screenshots/Screenshot_4.png)
+<img width="1919" height="1199" alt="Screenshot 2025-09-03 011623" src="https://github.com/user-attachments/assets/4e40fc58-75cf-4c40-8d2d-9596b0f8c5f6" />
 
 ### 5. Grafana Dashboard (Node.js Metrics)
 ![Grafana App Dashboard](screenshots/Screenshot_5.png)
+<img width="1919" height="1063" alt="Screenshot 2025-09-03 001539" src="https://github.com/user-attachments/assets/5825d09b-ec06-4533-b209-5b87ad125940" />
 
 ---
 
@@ -93,4 +98,4 @@ helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring
 ---
 
 ## 📜 License
-MIT License © 2025 [Your Name]
+MIT License © 2025 Ekansh Pandey
