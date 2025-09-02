@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: demo
+data:
+  APP_MESSAGE: "Deployed via GitHub Actions to Kubernetes 🚀"

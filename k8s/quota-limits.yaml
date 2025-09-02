@@ -1,0 +1,29 @@
+# k8s/quota-limits.yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: demo-quota
+  namespace: demo
+spec:
+  hard:
+    pods: "20"
+    requests.cpu: "2"
+    requests.memory: 2Gi
+    limits.cpu: "4"
+    limits.memory: 4Gi
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: defaults
+  namespace: demo
+spec:
+  limits:
+    - type: Container
+      default:
+        cpu: "250m"
+        memory: 256Mi
+      defaultRequest:
+        cpu: "50m"
+        memory: 64Mi
+  

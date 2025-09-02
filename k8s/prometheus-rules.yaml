@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: web-rules
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: web.rules
+      rules:
+        - alert: WebPodRestarts
+          expr: increase(kube_pod_container_status_restarts_total{namespace="demo",container="web"}[5m]) > 0
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Web container restarted"
+            description: "Container restarted in the last 5 minutes."

@@ -1,0 +1,15 @@
+# Node
+node_modules/
+
+# Logs
+logs
+*.log
+
+# OS
+.DS_Store
+
+# K8s
+k8s/secret.yaml
+
+# Misc
+.env
